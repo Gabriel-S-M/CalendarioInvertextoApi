@@ -1,0 +1,7 @@
+{
+  "name": "CalendarioInvertextoAPI",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
