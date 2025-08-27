@@ -1,20 +1,38 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Calendário Feriados
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="calendario-container">
+    <ion-item>
+      <ion-label position="stacked">Ano</ion-label>
+      <ion-select [(ngModel)]="currentYear" (ionChange)="onChangeFiltro()">
+        <ion-select-option *ngFor="let ano of anos" [value]="ano">{{ano}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Mês</ion-label>
+      <ion-select [(ngModel)]="currentMonth" (ionChange)="onChangeFiltroMonth()">
+        <ion-select-option *ngFor="let m of meses; let i = index" [value]="i">{{m}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Estado</ion-label>
+      <ion-select [(ngModel)]="selectedEstado" (ionChange)="onChangeFiltro()" placeholder="Selecione o estado (opcional)">
+        <ion-select-option *ngFor="let uf of estados" [value]="uf.sigla">{{uf.nome}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <h2>{{ currentYear }} - {{ meses[currentMonth] }}</h2>
+    <div class="calendario-grid">
+      <div *ngFor="let d of ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb']" class="calendario-dia-semana">{{d}}</div>
+      <div *ngFor="let _ of [].constructor(firstDayOfWeek)"></div>
+      <div *ngFor="let day of daysInMonth" [ngClass]="{'feriado-bg': isFeriado(day)}" class="calendario-dia" (click)="isFeriado(day) && abrirFeriado(day)">
+        {{ day }}
+      </div>
+    </div>
   </div>
 </ion-content>
