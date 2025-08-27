@@ -124,10 +124,12 @@ export class HomePage implements OnInit {
       return fAno === ano && fMes === mes && fDia === dia;
     });
     if (feriado) {
+      const [anoF, mesF, diaF] = feriado.date.split('-');
+      const dataFormatada = `${diaF}/${mesF}/${anoF}`;
       const alert = await this.alertCtrl.create({
-        header: 'Feriado',
-        subHeader: feriado.date,
-        message: feriado.name,
+        header: feriado.name,
+        subHeader: `${feriado.type} - ${feriado.level}`,
+        message: dataFormatada,
         buttons: ['Fechar']
       });
       await alert.present();
